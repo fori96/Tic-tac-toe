@@ -1,0 +1,22 @@
+.gameSetupForm {
+    border: solid 1px;
+    width: 50%;
+    margin: auto;
+    padding: 10px 8px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: #ac8b4d;
+    font-weight: 600;
+
+    .submit {
+        background-image: repeating-linear-gradient(
+            170deg,
+            rgb(128, 128, 128) 1%,
+            rgb(197, 225, 236) 99%
+        );
+        padding: 8px 16px;
+        border-radius: 5px;
+        font-weight: 600;
+        margin-top: 8px;
+    }
+}
