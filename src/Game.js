@@ -1,5 +1,5 @@
 import SetupForm from "./SetupForm";
-import Table from "./Table";
+import Table from "./table/Table";
 import { useState } from "react";
 
 const Game = () => {
