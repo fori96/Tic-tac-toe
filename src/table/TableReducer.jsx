@@ -18,7 +18,6 @@ const gameReducer = (state, action) => {
             return {
                 ...state,
                 tiles: setTiles2(state.tableSize, state.tiles),
-                tableSize: state.tableSize + 5,
             };
         case ActionTypes.CLICK_TILE: {
             const { i, j } = action.idxs;
@@ -73,6 +72,7 @@ const gameReducer = (state, action) => {
             return {
                 ...state,
                 round: state.round + 1,
+                tableSize: state.tableSize + 5,
                 step: 1,
                 roundWinner: "",
                 xIsNext: false,
@@ -157,12 +157,12 @@ function setTiles(tableSize) {
 }
 
 function setTiles2(tableSize, tiles) {
-    const newTable = Array(tableSize + 5)
+    const newTable = Array(tableSize)
         .fill(0)
-        .map(() => new Array(tableSize + 5).fill(""));
+        .map(() => new Array(tableSize).fill(""));
 
-    for (let i = 0; i < tableSize; i++) {
-        for (let j = 0; j < tableSize; j++) {
+    for (let i = 0; i < tableSize - 5; i++) {
+        for (let j = 0; j < tableSize - 5; j++) {
             newTable[j + 2][i + 2] = tiles[j][i];
         }
     }
