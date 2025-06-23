@@ -1,11 +1,26 @@
+export const ActionTypes = {
+    INIT_TILES: "INIT_TILES",
+    INIT_NEXTROUND: "INIT_NEXTROUND",
+    CLICK_TILE: "CLICK_TILE",
+    END_ROUND: "END_ROUND",
+    RESET: "RESTET",
+};
+
 const gameReducer = (state, action) => {
     switch (action.type) {
-        case "INIT_TILES":
+        case ActionTypes.INIT_TILES:
             return {
                 ...state,
                 tiles: setTiles(state.tableSize),
+                continuous: action.continuous,
             };
-        case "CLICK_TILE": {
+        case ActionTypes.INIT_NEXTROUND:
+            return {
+                ...state,
+                tiles: setTiles2(state.tableSize, state.tiles),
+                tableSize: state.tableSize + 5,
+            };
+        case ActionTypes.CLICK_TILE: {
             const { i, j } = action.idxs;
             if (state.tiles[i][j] !== "" || state.end) return state;
 
@@ -35,7 +50,7 @@ const gameReducer = (state, action) => {
                 end: roundEnded,
             };
         }
-        case "END_ROUND": {
+        case ActionTypes.END_ROUND: {
             let newWins =
                 state.wins +
                 (state.roundWinner === "" ? "-" : state.roundWinner) +
@@ -44,32 +59,30 @@ const gameReducer = (state, action) => {
             let xWins = (newWins.match(/X/g) || []).length;
             let oWins = (newWins.match(/O/g) || []).length;
 
-            let finished = false;
+            let gameFinished = false;
             let winner = "";
             if (xWins > action.rounds / 2) {
-                finished = true;
+                gameFinished = true;
                 winner = "X";
             }
             if (oWins > action.rounds / 2) {
-                finished = true;
+                gameFinished = true;
                 winner = "O";
             }
 
             return {
                 ...state,
                 round: state.round + 1,
-                tableSize: state.tableSize + 5,
-                tiles: setTiles(state.tableSize + 5),
                 step: 1,
                 roundWinner: "",
                 xIsNext: false,
                 end: false,
                 wins: newWins,
                 winner: winner,
-                finished: finished,
+                finished: gameFinished,
             };
         }
-        case "RESET":
+        case ActionTypes.RESET:
             return action.initialState;
 
         default:
@@ -141,4 +154,18 @@ function setTiles(tableSize) {
     return Array(tableSize)
         .fill(0)
         .map(() => new Array(tableSize).fill(""));
+}
+
+function setTiles2(tableSize, tiles) {
+    const newTable = Array(tableSize + 5)
+        .fill(0)
+        .map(() => new Array(tableSize + 5).fill(""));
+
+    for (let i = 0; i < tableSize; i++) {
+        for (let j = 0; j < tableSize; j++) {
+            newTable[j + 2][i + 2] = tiles[j][i];
+        }
+    }
+
+    return newTable;
 }

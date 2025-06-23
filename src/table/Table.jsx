@@ -2,11 +2,13 @@ import "./Table.css";
 
 import { useEffect, useReducer } from "react";
 
+import { ActionTypes } from "./TableReducer";
 import gameReducer from "./TableReducer";
 
 const initialState = {
     tableSize: 3,
     tiles: [],
+    continuous: false,
     end: false,
     wins: "",
     round: 1,
@@ -17,30 +19,38 @@ const initialState = {
     step: 1,
 };
 
-const Table = ({ rounds, Reset }) => {
+const Table = ({ gameOptions, Reset }) => {
     const [state, dispatch] = useReducer(gameReducer, initialState);
 
     useEffect(() => {
-        dispatch({ type: "INIT_TILES" });
-    }, [state.tableSize]);
+        if (state.round > 1 && state.continuous) {
+            dispatch({ type: ActionTypes.INIT_NEXTROUND });
+        } else {
+            const continuous = gameOptions.continuous
+                ? gameOptions.continuous
+                : false;
+            dispatch({ type: ActionTypes.INIT_TILES, continuous });
+        }
+    }, [state.round]);
 
     useEffect(() => {
+        const rounds = gameOptions.round;
         if (state.end) {
             if (state.round <= rounds) {
-                dispatch({ type: "END_ROUND", rounds });
+                dispatch({ type: ActionTypes.END_ROUND, rounds });
             }
         }
     }, [state.end]);
 
     function onTileClick(i, j) {
         dispatch({
-            type: "CLICK_TILE",
+            type: ActionTypes.CLICK_TILE,
             idxs: { i, j },
         });
     }
 
-    function onResetHangle() {
-        dispatch({ type: "RESET", initialState });
+    function onResetHandle() {
+        dispatch({ type: ActionTypes.RESET, initialState });
         Reset();
     }
 
@@ -62,7 +72,7 @@ const Table = ({ rounds, Reset }) => {
                         <label className="winner">Winner: {state.winner}</label>
                         <button
                             className="reset"
-                            onClick={() => onResetHangle()}
+                            onClick={() => onResetHandle()}
                         >
                             Reset
                         </button>
@@ -78,7 +88,7 @@ const Table = ({ rounds, Reset }) => {
             >
                 {state.tiles.map((element, i) => {
                     return (
-                        <>
+                        <div key={i}>
                             {element.map((e, j) => {
                                 return (
                                     <div
@@ -90,7 +100,7 @@ const Table = ({ rounds, Reset }) => {
                                     </div>
                                 );
                             })}
-                        </>
+                        </div>
                     );
                 })}
             </div>
