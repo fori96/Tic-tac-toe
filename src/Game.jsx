@@ -6,7 +6,7 @@ const Game = () => {
     const [gameOptions, setGameOptions] = useState({
         round: 0,
         continuous: false,
-        //starterTableSize: 3,
+        starterTableSize: 3,
         //player1 and player2 settings: icon, icon color, bg, bg color or img
     });
     const [ready, setReady] = useState(false);

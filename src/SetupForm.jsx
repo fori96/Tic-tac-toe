@@ -8,6 +8,7 @@ const SetupForm = ({ SetupGameOptions }) => {
     function handleSubmit(formData) {
         const roundValue = formData.get("roundInput");
         const continuous = formData.get("continuous");
+        const starterTableSize = formData.get("tableSize");
         if (roundValue % 2 === 0) {
             setRoundError(true);
         } else {
@@ -15,6 +16,7 @@ const SetupForm = ({ SetupGameOptions }) => {
             SetupGameOptions({
                 round: roundValue,
                 continuous: continuous === "on",
+                starterTableSize: parseInt(starterTableSize),
             });
         }
     }
@@ -25,7 +27,12 @@ const SetupForm = ({ SetupGameOptions }) => {
                 <label for={"roundInput"} className="inputLabel">
                     Number of Rounds:{" "}
                 </label>
-                <input id="roundInput" name="roundInput" type="number" />
+                <input
+                    id="roundInput"
+                    name="roundInput"
+                    defaultValue={3}
+                    type="number"
+                />
             </div>
             <span hidden={!roundError} className="error">
                 No even number, please!
@@ -40,7 +47,12 @@ const SetupForm = ({ SetupGameOptions }) => {
                 <label for={"tableSize"} className="inputLabel">
                     Starter table size:{" "}
                 </label>
-                <input id="tableSize" name="tableSize" type="number" />
+                <input
+                    id="tableSize"
+                    name="tableSize"
+                    defaultValue={3}
+                    type="number"
+                />
             </div>
             <button type="submit" className="submit">
                 Ready!

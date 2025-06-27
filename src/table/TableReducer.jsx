@@ -9,15 +9,22 @@ export const ActionTypes = {
 const gameReducer = (state, action) => {
     switch (action.type) {
         case ActionTypes.INIT_TILES:
-            return {
+            let newState = {
                 ...state,
-                tiles: setTiles(state.tableSize),
-                continuous: action.continuous,
+            };
+            if (state.round === 1) {
+                newState.tableSize = action.gameOptions.starterTableSize;
+                newState.continuous = action.gameOptions.continuous;
+            }
+            console.log(newState);
+            return {
+                ...newState,
+                tiles: setTiles(newState),
             };
         case ActionTypes.INIT_NEXTROUND:
             return {
                 ...state,
-                tiles: setTiles2(state.tableSize, state.tiles),
+                tiles: setTiles(state.tableSize, state.tiles),
             };
         case ActionTypes.CLICK_TILE: {
             const { i, j } = action.idxs;
@@ -150,22 +157,25 @@ function checkWinner(tiles, tableSize) {
     return winner;
 }
 
-function setTiles(tableSize) {
+/* function setTiles(tableSize) {
+    console.log(tableSize);
     return Array(tableSize)
         .fill(0)
         .map(() => new Array(tableSize).fill(""));
-}
+} */
 
-function setTiles2(tableSize, tiles) {
-    const newTable = Array(tableSize)
+function setTiles(state) {
+    const newTable = Array(state.tableSize)
         .fill(0)
-        .map(() => new Array(tableSize).fill(""));
+        .map(() => new Array(state.tableSize).fill(""));
 
-    for (let i = 0; i < tableSize - 5; i++) {
-        for (let j = 0; j < tableSize - 5; j++) {
-            newTable[j + 2][i + 2] = tiles[j][i];
+    console.log(newTable);
+    if (state.round > 1 && state.continuous) {
+        for (let i = 0; i < state.tableSize - 5; i++) {
+            for (let j = 0; j < state.tableSize - 5; j++) {
+                newTable[j + 2][i + 2] = state.tiles[j][i];
+            }
         }
     }
-
     return newTable;
 }

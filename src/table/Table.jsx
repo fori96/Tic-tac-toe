@@ -23,14 +23,7 @@ const Table = ({ gameOptions, Reset }) => {
     const [state, dispatch] = useReducer(gameReducer, initialState);
 
     useEffect(() => {
-        if (state.round > 1 && state.continuous) {
-            dispatch({ type: ActionTypes.INIT_NEXTROUND });
-        } else {
-            const continuous = gameOptions.continuous
-                ? gameOptions.continuous
-                : false;
-            dispatch({ type: ActionTypes.INIT_TILES, continuous });
-        }
+        dispatch({ type: ActionTypes.INIT_TILES, gameOptions });
     }, [state.round]);
 
     useEffect(() => {
@@ -54,6 +47,7 @@ const Table = ({ gameOptions, Reset }) => {
         Reset();
     }
 
+    console.log(state);
     return (
         <div className="gameArea">
             <div className="gameInfos">
