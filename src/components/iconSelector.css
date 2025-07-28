@@ -1,0 +1,54 @@
+.selector-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 250px;
+    height: 60px;
+    overflow: hidden;
+    justify-content: space-between;
+
+    .item-list-wrapper {
+        display: block;
+        flex-direction: column;
+        height: 200px;
+        scrollbar-width: auto;
+        overflow-y: scroll;
+        scroll-behavior: smooth;
+        transform: rotate(90deg);
+    }
+
+    .item-list-wrapper::-webkit-scrollbar {
+        width: 2px;
+        background-color: #aaa; /* or add it to the track */
+    }
+
+    /* Add a thumb */
+    .item-list-wrapper::-webkit-scrollbar-thumb {
+        background: #000;
+    }
+}
+.arrow,
+arrow image {
+    width: 20px;
+    height: 30px;
+}
+
+.icon svg {
+    fill: yellow !important;
+    width: 50px;
+    height: 50px;
+    transform: rotate(-90deg);
+}
+.icon:hover {
+    background-color: #00000042;
+}
+
+.unavaibleIcon {
+    background-color: #d8000042;
+    svg {
+        fill: rgb(148, 148, 3) !important;
+    }
+}
+.selected {
+    background-color: #00d80b42;
+}

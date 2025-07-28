@@ -47,9 +47,9 @@
     border: solid 3px rgb(247, 34, 34);
     border-radius: 5px;
     display: grid;
-    gap: 1px; /* spacing between boxes */
-    width: 40%;
-    min-width: fit-content;
+    gap: 1px;
+    width: 50%;
+    max-width: 900px;
     margin: auto;
 }
 
@@ -61,5 +61,13 @@
     border: solid 1px black;
     border-radius: 2px;
     background-color: white;
-    min-width: 15px;
+
+    svg {
+        fill: rgb(0, 0, 0) !important;
+        width: max-content;
+        aspect-ratio: 1 / 1;
+        height: 90%;
+        display: block;
+        width: 90%;
+    }
 }

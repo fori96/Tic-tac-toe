@@ -1,3 +1,5 @@
+import { Icons } from "../components/icons";
+
 export const ActionTypes = {
     INIT_TILES: "INIT_TILES",
     INIT_NEXTROUND: "INIT_NEXTROUND",
@@ -16,7 +18,12 @@ const gameReducer = (state, action) => {
                 newState.tableSize = action.gameOptions.starterTableSize;
                 newState.continuous = action.gameOptions.continuous;
             }
-            console.log(newState);
+            newState.player1 = Icons.find(
+                (i) => i.id === action.gameOptions.player1
+            );
+            newState.player2 = Icons.find(
+                (i) => i.id === action.gameOptions.player2
+            );
             return {
                 ...newState,
                 tiles: setTiles(newState),
@@ -34,8 +41,8 @@ const gameReducer = (state, action) => {
                 row.map((cell, colIndex) =>
                     rowIndex === i && colIndex === j
                         ? state.xIsNext
-                            ? "X"
-                            : "O"
+                            ? "P1"
+                            : "P2"
                         : cell
                 )
             );
@@ -69,11 +76,11 @@ const gameReducer = (state, action) => {
             let winner = "";
             if (xWins > action.rounds / 2) {
                 gameFinished = true;
-                winner = "X";
+                winner = "P1";
             }
             if (oWins > action.rounds / 2) {
                 gameFinished = true;
-                winner = "O";
+                winner = "P2";
             }
 
             return {
@@ -157,19 +164,11 @@ function checkWinner(tiles, tableSize) {
     return winner;
 }
 
-/* function setTiles(tableSize) {
-    console.log(tableSize);
-    return Array(tableSize)
-        .fill(0)
-        .map(() => new Array(tableSize).fill(""));
-} */
-
 function setTiles(state) {
     const newTable = Array(state.tableSize)
         .fill(0)
         .map(() => new Array(state.tableSize).fill(""));
 
-    console.log(newTable);
     if (state.round > 1 && state.continuous) {
         for (let i = 0; i < state.tableSize - 5; i++) {
             for (let j = 0; j < state.tableSize - 5; j++) {

@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "-": "^0.0.1",
         "@testing-library/dom": "^10.4.0",
         "@testing-library/jest-dom": "^6.6.3",
         "@testing-library/react": "^16.3.0",
@@ -10,7 +11,11 @@
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "react-scripts": "5.0.1",
-        "web-vitals": "^2.1.4"
+        "save-dev": "^0.0.1-security",
+        "web-vitals": "^2.1.4",
+        "webpack": "^5.99.9",
+        "webpack-cli": "^6.0.1",
+        "webpack-dev-server": "^5.2.2"
     },
     "scripts": {
         "start": "react-scripts start",
@@ -35,5 +40,8 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "file-loader": "^6.2.0"
     }
 }

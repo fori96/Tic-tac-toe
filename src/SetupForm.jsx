@@ -1,9 +1,12 @@
 import "./SetupForm.css";
 
+import IconSelector from "./components/IconSelector";
 import { useState } from "react";
 
 const SetupForm = ({ SetupGameOptions }) => {
     const [roundError, setRoundError] = useState(false);
+    const [p1Icon, setP1Icon] = useState("");
+    const [p2Icon, setP2Icon] = useState("");
 
     function handleSubmit(formData) {
         const roundValue = formData.get("roundInput");
@@ -17,6 +20,8 @@ const SetupForm = ({ SetupGameOptions }) => {
                 round: roundValue,
                 continuous: continuous === "on",
                 starterTableSize: parseInt(starterTableSize),
+                player1: p1Icon,
+                player2: p2Icon,
             });
         }
     }
@@ -53,6 +58,19 @@ const SetupForm = ({ SetupGameOptions }) => {
                     defaultValue={3}
                     type="number"
                 />
+            </div>
+            <hr />
+            <div>
+                <label for={"plaxer1Icon"} className="inputLabel">
+                    Player 1 icon:{" "}
+                </label>
+                <IconSelector setIcon={setP1Icon} unavaibleIcons={p2Icon} />
+            </div>
+            <div>
+                <label for={"plaxer1Icon"} className="inputLabel">
+                    Player 2 icon:{" "}
+                </label>
+                <IconSelector setIcon={setP2Icon} unavaibleIcons={p1Icon} />
             </div>
             <button type="submit" className="submit">
                 Ready!

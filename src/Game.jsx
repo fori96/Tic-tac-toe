@@ -7,7 +7,8 @@ const Game = () => {
         round: 0,
         continuous: false,
         starterTableSize: 3,
-        //player1 and player2 settings: icon, icon color, bg, bg color or img
+        player1: "",
+        player2: "",
     });
     const [ready, setReady] = useState(false);
 
